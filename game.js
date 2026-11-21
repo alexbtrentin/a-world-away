@@ -340,6 +340,9 @@
   }
   function renderFinale(){
     const slide=STORY.endingSlides[state.finaleStep];if(!slide)return;
+    // Keep finale-only artwork out of the initial page image candidates used by link previews.
+    // It loads during the actual ending, one slide before the visual reveal.
+    if(state.finaleStep>=1){const finaleArt=document.querySelector('#emblem-reveal .pixel-emblem');if(finaleArt&&!finaleArt.getAttribute('src'))finaleArt.setAttribute('src',finaleArt.dataset.src)}
     el('finale-eyebrow').textContent=slide.eyebrow;
     el('finale-title').textContent=slide.title;
     el('finale-text').textContent=slide.text;

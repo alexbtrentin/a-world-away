@@ -1,10 +1,10 @@
 /* A World Away: offline-first game shell (keeps localStorage saves untouched). */
-const CACHE_NAME = 'awa-gift-mobile-2026-11-21-v5-first-visit-v2';
+const CACHE_NAME = 'awa-gift-mobile-2026-11-21-v6-spoiler-safe-social';
 const OFFLINE_ASSETS = [
   './', './index.html', './styles.css', './mobile.css?v=first-visit-v2',
-  './config.js', './music.js', './game.js', './mobile.js?v=first-visit-v2',
+  './config.js', './music.js', './game.js?v=social-safe-1', './mobile.js?v=first-visit-v2',
   './art/unwritten-emblem-pixel.png', './manifest.webmanifest',
-  './apple-touch-icon.png', './favicon.png',
+  './apple-touch-icon.png', './favicon.png', './share-preview.png',
   './icons/icon-192.png', './icons/icon-512.png'
 ];
 self.addEventListener('install', (event) => {
