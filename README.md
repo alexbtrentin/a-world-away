@@ -64,3 +64,23 @@ From this directory run `python3 -m http.server 8080`, then open `http://localho
 - Enlarged the virtual joystick and action buttons for easier thumb taps during gameplay.
 - Increased the reserved side margins in landscape so the bigger controls do not crowd the game canvas.
 - Added a little extra touch forgiveness around the buttons.
+
+
+## New: automatic first-visit iPhone installation instructions
+
+On a **first visit to the public website in iPhone Safari (portrait)**, the orientation gate instead shows a four-step **Add to Home Screen** guide. Users can choose **Continue in Safari Instead** to dismiss the guide (the choice is remembered locally), then rotate to play in the browser. The rotate screen includes **How to Install on iPhone** to re-open the guide, and the title menu still has its installation-help control.
+
+When the game is launched from the **installed Home Screen app**, only the rotate prompt is shown in portrait—no installation guide. iPhone other-browser visitors get the rotate prompt and can access help through the title menu. Installation requires a user action via Safari; this guide cannot trigger installation automatically.
+
+Cache v4 refreshes the CSS, HTML and JavaScript without resetting game saves. Upload the contents of the ZIP to the **root** of your GitHub repository, replacing existing files; do not upload the creator version.
+
+
+## Installation guide fix v2 (November 2026)
+- iPhone portrait browser visits show **Your adventure awaits** with Add to Home Screen instructions by default. No strict Safari user-agent test.
+- The guide shows a **SETUP V2** marker to make it easy to tell whether the latest files were deployed.
+- After **Continue in Safari Instead**, the rotation gate appears; users can reopen the guide.
+- Launched from the iPhone Home Screen, the app skips installation instructions and goes straight to the rotation gate.
+- `mobile.css` and `mobile.js` now have versioned asset URLs and are pre-cached by service worker v5, which helps prevent an older installed worker from serving them.
+- No save data or chapters are reset by this change.
+
+**When uploading to GitHub:** You must replace `index.html`, `mobile.js`, `mobile.css`, and `sw.js` together. Upload all files in this ZIP to the repository ROOT. If your public `index.html` still starts its `landscape-gate` without `data-mode="install"`, GitHub is still serving an old version. GitHub Pages may need a short deployment delay.

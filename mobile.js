@@ -63,13 +63,41 @@
   const installSheet=document.getElementById('install-sheet');
   const installed=()=>matchMedia('(display-mode:standalone)').matches || window.navigator.standalone===true;
   if(installed())installBtn?.classList.add('hidden');
+  // First-visit onboarding is deliberately browser-agnostic on touch phones:
+  // iOS Safari's UA varies by version and browser, so avoid exact "Safari" matching.
+  // A standalone Home Screen app sees rotation only; browser visitors see install
+  // instructions until they explicitly select Continue in Browser.
+  const welcomeGate=document.getElementById('landscape-gate');
+  const welcomeDismiss=document.getElementById('install-welcome-dismiss');
+  const welcomeReopen=document.getElementById('install-welcome-reopen');
+  const guideKey='awa-iphone-browser-install-dismissed-v2';
+  const browserVisit=!installed();
+  let dismissed=false;
+  try{dismissed=localStorage.getItem(guideKey)==='yes';}catch{}
+  function updateWelcomeGate(){
+    if(!welcomeGate)return;
+    welcomeGate.dataset.mode=browserVisit&&!dismissed?'install':'rotate';
+    welcomeReopen?.classList.toggle('hidden',!browserVisit);
+  }
+  welcomeDismiss?.addEventListener('click',()=>{
+    dismissed=true;
+    try{localStorage.setItem(guideKey,'yes');}catch{}
+    updateWelcomeGate();
+  });
+  welcomeReopen?.addEventListener('click',()=>{
+    dismissed=false;
+    try{localStorage.removeItem(guideKey);}catch{}
+    updateWelcomeGate();
+  });
+  updateWelcomeGate();
+
   installBtn?.addEventListener('click',()=>{installSheet?.classList.remove('hidden');document.getElementById('install-close')?.focus();});
   document.getElementById('install-close')?.addEventListener('click',()=>{installSheet?.classList.add('hidden');installBtn?.focus();});
   installSheet?.addEventListener('click',e=>{if(e.target===installSheet) installSheet.classList.add('hidden');});
   // Do not start music until a real player gesture (game.js handles this).
   if('serviceWorker' in navigator && (location.protocol==='https:'||location.hostname==='localhost'||location.hostname==='127.0.0.1')){
     window.addEventListener('load',()=>{
-      navigator.serviceWorker.register('./sw.js',{scope:'./'}).then(async () => {
+      navigator.serviceWorker.register('./sw.js',{scope:'./',updateViaCache:'none'}).then(async () => {
         try{await navigator.serviceWorker.ready;
           const status=document.getElementById('offline-status');
           if(status)status.textContent='Offline files downloaded. You can launch the game without Wi-Fi after installation.';

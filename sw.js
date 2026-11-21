@@ -1,8 +1,8 @@
 /* A World Away: offline-first game shell (keeps localStorage saves untouched). */
-const CACHE_NAME = 'awa-gift-mobile-2026-11-21-v3-audio-dialogue';
+const CACHE_NAME = 'awa-gift-mobile-2026-11-21-v5-first-visit-v2';
 const OFFLINE_ASSETS = [
-  './', './index.html', './styles.css', './mobile.css',
-  './config.js', './music.js', './game.js', './mobile.js',
+  './', './index.html', './styles.css', './mobile.css?v=first-visit-v2',
+  './config.js', './music.js', './game.js', './mobile.js?v=first-visit-v2',
   './art/unwritten-emblem-pixel.png', './manifest.webmanifest',
   './apple-touch-icon.png', './favicon.png',
   './icons/icon-192.png', './icons/icon-512.png'

@@ -14,7 +14,7 @@
   <link rel="apple-touch-icon" href="apple-touch-icon.png">
   <link rel="icon" type="image/png" href="favicon.png">
   <link rel="stylesheet" href="styles.css">
-  <link rel="stylesheet" href="mobile.css">
+  <link rel="stylesheet" href="mobile.css?v=first-visit-v2">
 </head>
 <body>
   <div class="atmosphere" aria-hidden="true"></div>
@@ -22,15 +22,31 @@
     <div class="game-layout">
       <section class="play-column" aria-label="Pixel adventure game">
         <div class="game-frame">
-          <!-- Landscape-first touch experience: this covers the game on portrait phones. -->
-          <div id="landscape-gate" class="landscape-gate" role="status" aria-live="polite">
-            <div class="landscape-gate-card">
+          <!-- Browser-first install instructions are the safe default; mobile.js switches installed apps to rotate. -->
+          <div id="landscape-gate" class="landscape-gate" data-mode="install" role="region" aria-label="iPhone orientation and installation help">
+            <div class="landscape-gate-card landscape-gate-install" id="iphone-install-welcome">
+              <div class="landscape-gate-stars" aria-hidden="true">✦ &nbsp; ✧ &nbsp; ✦</div>
+              <p class="landscape-gate-eyebrow">A WORLD AWAY</p>
+              <div class="onboarding-icon" aria-hidden="true">✧</div>
+              <h2>Your adventure awaits</h2>
+              <p class="landscape-gate-description">Add this game to your iPhone Home Screen to play without Safari's address bar.</p>
+              <div class="install-step-list" aria-label="How to install A World Away">
+                <div class="install-step"><span class="install-step-number">1</span><span>In <strong>Safari</strong>, tap the bottom <strong>page menu</strong> (☰), then <strong>Share</strong> <span class="share-icon" aria-label="share icon"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 16V2m0 0L7 7m5-5 5 5M5 11H3v10h18V11h-2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></svg></span>.</span></div>
+                <div class="install-step"><span class="install-step-number">2</span><span>Choose <strong>Add to Home Screen</strong>.</span></div>
+                <div class="install-step"><span class="install-step-number">3</span><span>Keep <strong>Open as Web App</strong> on, if shown, then tap <strong>Add</strong>.</span></div>
+                <div class="install-step"><span class="install-step-number">4</span><span>Launch <strong>A World Away</strong> from your Home Screen and rotate sideways to play.</span></div>
+              </div>
+              <p class="onboarding-save-note">For the best save experience, install before starting. <span class="setup-version">SETUP V2</span></p>
+              <button id="install-welcome-dismiss" class="onboarding-later" type="button">CONTINUE IN SAFARI INSTEAD</button>
+            </div>
+            <div class="landscape-gate-card landscape-gate-rotate">
               <div class="landscape-gate-stars" aria-hidden="true">✦ &nbsp; ✧ &nbsp; ✦</div>
               <div class="landscape-turn-art" aria-hidden="true"><div class="landscape-turn-phone"><div class="landscape-turn-screen">✦</div></div><span class="landscape-turn-arrow">↻</span></div>
               <p class="landscape-gate-eyebrow">A WORLD AWAY</p>
               <h2>Turn your phone sideways</h2>
               <p class="landscape-gate-description">This adventure is meant to be played in landscape, with the world between your thumbs.</p>
               <p class="landscape-gate-help">Screen not rotating? Turn off <strong>Portrait Orientation Lock</strong> in your iPhone’s Control Center.</p>
+              <button id="install-welcome-reopen" class="onboarding-reopen hidden" type="button">HOW TO INSTALL ON IPHONE</button>
             </div>
           </div>
           <div class="frame-head">
@@ -161,7 +177,7 @@
   </main>
   <div id="install-sheet" class="install-sheet hidden" role="dialog" aria-modal="true" aria-label="Install game on iPhone">
     <div class="install-card"><p class="eyebrow">YOUR ADVENTURE, ONE TAP AWAY</p><h2>Install on iPhone</h2>
-      <ol><li>Open this game’s <strong>HTTPS link in Safari</strong>.</li><li>Tap <strong>Share</strong> (square with an up arrow), then <strong>Add to Home Screen</strong>.</li><li>Keep <strong>Open as Web App</strong> enabled when shown, then tap <strong>Add</strong>.</li><li>Open <strong>A World Away</strong> from the Home Screen and turn your phone sideways.</li></ol>
+      <ol><li>Open this game’s <strong>HTTPS link in Safari</strong>.</li><li>Tap the <strong>page menu</strong> (☰) or <strong>Share</strong> (square with an up arrow), then <strong>Add to Home Screen</strong>.</li><li>Keep <strong>Open as Web App</strong> enabled when shown, then tap <strong>Add</strong>.</li><li>Open <strong>A World Away</strong> from the Home Screen and turn your phone sideways.</li></ol>
       <p id="offline-status" class="install-note">After the game loads over HTTPS, its files will be cached for offline play. Install before beginning so progress is saved in the Home Screen app.</p>
       <button type="button" id="install-close" class="primary-button install-close">✦ &nbsp; BACK TO ADVENTURE</button>
     </div>
@@ -169,6 +185,6 @@
   <script src="config.js"></script>
   <script src="music.js"></script>
   <script src="game.js"></script>
-  <script src="mobile.js"></script>
+  <script src="mobile.js?v=first-visit-v2"></script>
 </body>
 </html>
