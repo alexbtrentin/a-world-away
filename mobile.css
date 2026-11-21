@@ -141,3 +141,38 @@ button {touch-action:manipulation;}
 @media (hover:none) and (pointer:coarse) and (orientation:portrait){.landscape-gate{display:grid!important}}
 @media (prefers-reduced-motion:reduce){.landscape-turn-phone{animation:none;transform:rotate(-90deg)}}
 @media (hover:none) and (pointer:coarse) and (orientation:portrait) and (max-height:580px){.landscape-gate-card{padding:10px}.landscape-turn-art{height:87px}.landscape-gate-stars{display:none}.landscape-gate h2{font-size:22px}.landscape-gate-description{font-size:13px}}
+
+
+/* iPhone 2026-11: the left portrait exceeded the dialogue text inset.
+   Reserve the full portrait width plus a 20px buffer, even in short landscape. */
+@media (hover:none) and (pointer:coarse) and (orientation:landscape){
+  .dialogue-stage{width:min(790px,97%)!important;padding-top:65px!important;}
+  .dialogue-stage .speaker-portraits{inset:0 8px auto!important;height:122px!important;}
+  .dialogue-stage .portrait-primary{height:108px!important;width:96px!important;transform:translateY(0)!important;}
+  .dialogue-stage .character-portrait.portrait-secondary{height:73px!important;width:65px!important;transform:translate(0,-20px)!important;}
+  .dialogue-stage .dialogue-box{padding:10px 104px 11px 150px!important;min-height:96px!important;max-height:calc(100dvh - 74px);overflow-y:auto;align-items:center;}
+  .dialogue-stage.single-speaker .dialogue-box{padding-right:42px!important;}
+  .dialogue-stage.narration .dialogue-box{padding:13px 20px!important;}
+  .dialogue-stage .dialogue-copy{min-width:0!important;overflow-wrap:break-word;}
+  .dialogue-stage .dialogue-copy p{font-size:clamp(12px,1.8vw,17px)!important;line-height:1.42!important;overflow-wrap:anywhere;}
+  .dialogue-stage .dialogue-next{width:37px;min-width:37px;}
+}
+@media (hover:none) and (pointer:coarse) and (orientation:landscape) and (max-height:430px){
+  .dialogue-stage{padding-top:59px!important;}
+  .dialogue-stage .speaker-portraits{height:113px!important;}
+  .dialogue-stage .portrait-primary{height:99px!important;width:90px!important;}
+  .dialogue-stage .character-portrait.portrait-secondary{height:66px!important;width:60px!important;transform:translate(0,-16px)!important;}
+  .dialogue-stage .dialogue-box{padding:8px 95px 9px 139px!important;min-height:82px!important;max-height:calc(100dvh - 67px);}
+  .dialogue-stage.single-speaker .dialogue-box{padding-right:36px!important;}
+  .dialogue-stage .dialogue-copy p{font-size:clamp(11px,1.6vw,15px)!important;}
+}
+.title-sound-button,.pause-test-sound{background:#1d3741e8;color:#f4dcaa;border:1px solid #b8a477;border-radius:6px;box-shadow:0 3px 10px #0007;font:700 11px/1.3 ui-monospace,monospace;letter-spacing:.07em;padding:10px;min-height:38px;cursor:pointer;}
+.audio-test-status{color:#d3e5d6;font:11px/1.4 ui-monospace,monospace;text-align:center;margin:2px auto 7px;max-width:500px;}
+.audio-test-status:empty{display:none;}
+#intro .gift-title-menu #title-test-sound{min-height:38px!important;}
+.pause-test-sound{display:block;width:100%;margin:8px auto 1px;}
+@media (hover:none) and (pointer:coarse) and (orientation:landscape) and (max-height:430px){
+  #intro .gift-title-menu #title-test-sound{min-height:33px!important;font-size:10px;padding:6px;}
+  #intro .gift-menu-actions{gap:4px;}
+  .audio-test-status{font-size:9px;}
+}

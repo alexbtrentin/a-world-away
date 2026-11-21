@@ -100,8 +100,11 @@
       this.silent=true;this.targetVolume=null;this.available=!!(window.AudioContext||window.webkitAudioContext);
     }
     unlock(){
-      if(!this.available)return;
+      if(!this.available)return Promise.resolve(false);
       try{
+        // iOS requires its AudioContext to be CREATED by a real tap, not on page load.
+        // When supported, request the media playback session for a music-centric game.
+        try{if(navigator.audioSession && navigator.audioSession.type!=='playback')navigator.audioSession.type='playback';}catch{}
         if(!this.context){
           const AudioCtor=window.AudioContext||window.webkitAudioContext;
           const ctx=new AudioCtor();this.context=ctx;
@@ -109,16 +112,29 @@
           this.musicBus.connect(ctx.destination);
           this.sfxBus=ctx.createGain();this.sfxBus.gain.value=.75;
           this.sfxBus.connect(ctx.destination);
-          // A very light repeating echo lends the notes a distant magical quality.
           const echo=ctx.createDelay(.7),feedback=ctx.createGain(),wet=ctx.createGain();
           echo.delayTime.value=.27;feedback.gain.value=.14;wet.gain.value=.10;
           this.musicBus.connect(echo);echo.connect(feedback);feedback.connect(echo);
           echo.connect(wet);wet.connect(ctx.destination);
+          // Prime Web Audio during the actual button press; no audible autoplay.
+          const prime=ctx.createOscillator(),g=ctx.createGain();
+          g.gain.value=0;prime.connect(g);g.connect(ctx.destination);
+          prime.start();prime.stop(ctx.currentTime+.025);
+          ctx.onstatechange=()=>{if(ctx.state==='running'){this.silent=true;this.nextTime=0;this.targetVolume=null;}};
         }
-        if(this.context.state==='suspended')this.context.resume().catch(()=>{});
-      }catch{this.available=false}
+        const ctx=this.context;
+        if(ctx.state==='running')return Promise.resolve(true);
+        // 'interrupted' also occurs on iOS after backgrounding a Home Screen app.
+        const result=ctx.resume();
+        return Promise.resolve(result).then(()=>ctx.state==='running').catch(()=>false);
+      }catch(e){this.lastError=String(e);return Promise.resolve(false)}
     }
-    setEnabled(on){this.musicEnabled=!!on;if(!on)this.fadeOut();else this.unlock();}
+    setEnabled(on){
+      this.musicEnabled=!!on;
+      if(!on)this.fadeOut();
+      // Do not call unlock() here. Initial settings are read on page load,
+      // before the user's gesture; that used to create a blocked iOS context.
+    }
     setVolume(value){this.volume=Math.max(0,Math.min(1,Number(value)||0));this.targetVolume=null;}
     fadeOut(){
       if(!this.context||!this.musicBus)return;
@@ -136,6 +152,8 @@
       const key=mode==='cinematic'?'finale':['temple','isles','frost','maze','horizon'][chapter]+(room%3===2&&bossAlive?'-boss':'');
       const now=this.context.currentTime;
       if(this.context.state!=='running')return;
+      // After an iOS audio interruption, do not spend seconds scheduling notes in the past.
+      if(this.nextTime<now-.35){this.nextTime=now+.06;this.step=0;}
       if(this.silent||this.theme!==key){
         this.theme=key;this.step=0;this.nextTime=now+.085;
         this.musicBus.gain.cancelScheduledValues(now);

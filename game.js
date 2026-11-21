@@ -1005,6 +1005,40 @@
   function togglePause(){if(state.mode==='paused')resumeGame();else pauseGame()}
   // Landscape-only phone layout: entering portrait during gameplay safely pauses it.
   document.addEventListener('awa:portrait-blocked',()=>{if(state.mode==='play'||state.mode==='dialogue')pauseGame();});
+  // A user-activated sound check doubles as an iOS audio permission / resume gesture.
+  function testSound(){
+    state.audioOn=true;
+    soundtrack.setEnabled(true);
+    try{localStorage.setItem('awa-audio-muted','0')}catch{}
+    updateSoundButton();
+    const hint='If you cannot hear the chime, turn up iPhone volume and check Silent Mode.';
+    for(const id of ['title-sound-status','pause-sound-status']){
+      const label=el(id);if(label)label.textContent='Checking sound…';
+    }
+    soundtrack.unlock().then(ok=>{
+      if(ok){soundtrack.effect('door');
+        for(const id of ['title-sound-status','pause-sound-status']){
+          const label=el(id);if(label)label.textContent='♫ Test chime triggered. Did you hear it? '+hint;
+        }
+      }else{
+        for(const id of ['title-sound-status','pause-sound-status']){
+          const label=el(id);if(label)label.textContent='Audio is not running yet. Tap TEST SOUND again. '+hint;
+        }
+      }
+    }).catch(()=>{
+      for(const id of ['title-sound-status','pause-sound-status']){
+        const label=el(id);if(label)label.textContent='Audio could not start. '+hint;
+      }
+    });
+  }
+  // If an installed iPhone web app resumes from the background, a fresh tap can
+  // resume an interrupted context. Avoid creating audio on a non-gesture event.
+  const resumeInterruptedAudio=()=>{
+    if(state.audioOn && soundtrack.context && soundtrack.context.state!=='running')soundtrack.unlock();
+  };
+  document.addEventListener('pointerdown',resumeInterruptedAudio,{capture:true,passive:true});
+  document.addEventListener('touchstart',resumeInterruptedAudio,{capture:true,passive:true});
+  document.addEventListener('keydown',resumeInterruptedAudio,{capture:true});
   function updateSoundButton(){
     el('sound-toggle').innerHTML=state.audioOn?'♫ <span>Music on</span>':'♫ <span>Music off</span>';
     el('sound-toggle').setAttribute('aria-pressed',String(state.audioOn));
@@ -1068,6 +1102,8 @@
   el('pause-resume').addEventListener('click',resumeGame);
   el('pause-chapters').addEventListener('click',showChapterMenu);
   el('pause-sound-toggle').addEventListener('click',toggleSound);
+  el('title-test-sound').addEventListener('click',testSound);
+  el('pause-test-sound').addEventListener('click',testSound);
   el('music-volume').addEventListener('input',e=>{soundtrack.setVolume(Number(e.target.value)/100);el('music-volume-value').textContent=`${e.target.value}%`});
   el('journal-button').addEventListener('click',toggleJournal);
   el('journal-close').addEventListener('click',journalClose);

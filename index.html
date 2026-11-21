@@ -56,6 +56,8 @@
                 <p class="intro-description" id="intro-description">A world out of balance. An ancient mystery. One very unexpected adventure.</p>
                 <div class="gift-menu-actions">
                   <button class="primary-button gift-play-button" type="button" id="start">▶ &nbsp; PLAY</button>
+                  <button type="button" class="title-sound-button" id="title-test-sound">♫ &nbsp; ENABLE / TEST SOUND</button>
+                  <p class="audio-test-status" id="title-sound-status" role="status" aria-live="polite"></p>
                   <button type="button" class="subtle-button gift-fullscreen-button" id="title-fullscreen" aria-label="Enter fullscreen" aria-pressed="false" title="Expand A World Away to fullscreen">⛶ &nbsp; FULLSCREEN</button>
                   <button type="button" class="install-help-button" id="install-help-button">▣ &nbsp; INSTALL ON IPHONE</button>
                   <button type="button" class="subtle-button gift-newgame hidden" id="new-journey">✧ &nbsp; NEW JOURNEY</button>
@@ -99,6 +101,8 @@
                 <div class="volume-control"><label for="music-volume">Music volume</label><input id="music-volume" type="range" min="0" max="100" value="55" step="5"><output id="music-volume-value" for="music-volume">55%</output></div>
                 <button type="button" id="pause-resume" class="primary-button">▶ &nbsp; RESUME ADVENTURE</button>
                 <div class="pause-secondary"><button type="button" id="pause-sound-toggle" class="subtle-button">♫ Music on/off</button><button type="button" id="pause-chapters" class="subtle-button">⌂ Main Menu</button><button type="button" id="pause-journal" class="subtle-button">▤ Journal</button><button type="button" id="pause-restart" class="subtle-button">↻ Restart chapter</button><button type="button" id="pause-fullscreen" class="subtle-button">⛶ Fullscreen</button></div>
+                <button type="button" class="subtle-button pause-test-sound" id="pause-test-sound">♫ TEST SOUND / UNLOCK AUDIO</button>
+                <p class="audio-test-status" id="pause-sound-status" role="status" aria-live="polite"></p>
                 <small>ESC TO RESUME</small>
               </div>
             </div>

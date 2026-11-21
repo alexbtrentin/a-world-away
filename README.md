@@ -49,3 +49,12 @@ From this directory run `python3 -m http.server 8080`, then open `http://localho
 - Turning the phone upright during gameplay pauses safely. After rotating back, select Resume Adventure.
 - Updated service-worker cache name to `v2-landscape`; uploading this build over the previous GitHub Pages files does not reset saves.
 - iPhone Safari cannot be compelled to change physical orientation. The manifest already requests `landscape` for supporting devices, but the CSS prompt is the dependable iOS behavior.
+
+
+## iPhone audio and dialogue fix (2026-11-21)
+
+- Portraits now have a wider guaranteed safe region in landscape dialogue; no text should be obscured by either portrait.
+- The soundtrack no longer creates the AudioContext before a tap. Music initialization occurs on Play, Resume, or the new **Enable / Test Sound** button. This follows the iOS Web Audio gesture requirement.
+- The game reattempts audio resume after iOS suspends/interrupts it; music timing skips elapsed background time.
+- A chime test is available both on the title screen and in Pause. If the test is silent, raise volume and check iOS Silent Mode / device audio settings. This does not guarantee a fix for every Safari hardware/audio-session bug.
+- The cache is versioned to `v3-audio-dialogue`; replacing files on GitHub Pages will not clear progress. If an old version is still displayed, close/reopen the Home Screen app after Pages finishes deploying.
