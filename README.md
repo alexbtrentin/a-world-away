@@ -58,3 +58,9 @@ From this directory run `python3 -m http.server 8080`, then open `http://localho
 - The game reattempts audio resume after iOS suspends/interrupts it; music timing skips elapsed background time.
 - A chime test is available both on the title screen and in Pause. If the test is silent, raise volume and check iOS Silent Mode / device audio settings. This does not guarantee a fix for every Safari hardware/audio-session bug.
 - The cache is versioned to `v3-audio-dialogue`; replacing files on GitHub Pages will not clear progress. If an old version is still displayed, close/reopen the Home Screen app after Pages finishes deploying.
+
+
+## Mobile control sizing update
+- Enlarged the virtual joystick and action buttons for easier thumb taps during gameplay.
+- Increased the reserved side margins in landscape so the bigger controls do not crowd the game canvas.
+- Added a little extra touch forgiveness around the buttons.

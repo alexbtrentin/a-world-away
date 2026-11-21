@@ -41,13 +41,14 @@ button {touch-action:manipulation;}
   .keyboard-guide {display:none!important;}
   .controls-overlay {display:none!important;}
   .mobile-controls .dpad {display:none!important;}
-  .joystick-zone {pointer-events:auto;touch-action:none;position:relative;display:grid;place-items:center;width:116px;height:116px;flex:none;border-radius:50%;background:#0c243aab;border:2px solid #bdad7a88;box-shadow:inset 0 0 24px #274657b0, 0 5px 18px #0006;overscroll-behavior:contain;}
+  .joystick-zone {pointer-events:auto;touch-action:none;position:relative;display:grid;place-items:center;width:132px;height:132px;flex:none;border-radius:50%;background:#0c243aab;border:2px solid #bdad7a88;box-shadow:inset 0 0 24px #274657b0, 0 5px 18px #0006;overscroll-behavior:contain;}
   .joystick-zone:before {content:"";position:absolute;inset:25%;border:1px dashed #ebd8a57c;border-radius:50%;}
-  .joystick-knob {display:grid;place-items:center;pointer-events:none;position:relative;width:52px;height:52px;border-radius:50%;border:2px solid #f0d498;background:radial-gradient(circle at 35% 30%,#6c8596,#234153 68%);box-shadow:0 5px 12px #0009;color:#ffe7ad;font-size:21px;transition:transform 0.06s linear;}
+  .joystick-knob {display:grid;place-items:center;pointer-events:none;position:relative;width:58px;height:58px;border-radius:50%;border:2px solid #f0d498;background:radial-gradient(circle at 35% 30%,#6c8596,#234153 68%);box-shadow:0 5px 12px #0009;color:#ffe7ad;font-size:21px;transition:transform 0.06s linear;}
   .joystick-zone:active .joystick-knob,.joystick-zone.active .joystick-knob{box-shadow:0 0 17px #f6d68d80, 0 4px 12px #000a;}
-  .action-buttons{pointer-events:auto!important;touch-action:none;display:grid!important;grid-template-columns:repeat(2,minmax(51px,1fr));grid-template-rows:repeat(2,1fr);gap:9px;width:146px;}
-  .touch-button{pointer-events:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;min-height:54px;min-width:50px;border-radius:12px!important;border:1px solid #cfb782d1!important;background:#142b3fe8!important;box-shadow:0 4px 13px #0008!important;font-size:20px!important;line-height:1.1!important;display:flex!important;align-items:center;justify-content:center;flex-direction:column;gap:3px;padding:6px!important;}
+  .action-buttons{pointer-events:auto!important;touch-action:none;display:grid!important;grid-template-columns:repeat(2,minmax(58px,1fr));grid-template-rows:repeat(2,1fr);gap:10px;width:166px;}
+  .touch-button{pointer-events:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;position:relative;min-height:62px;min-width:58px;border-radius:12px!important;border:1px solid #cfb782d1!important;background:#142b3fe8!important;box-shadow:0 4px 13px #0008!important;font-size:22px!important;line-height:1.1!important;display:flex!important;align-items:center;justify-content:center;flex-direction:column;gap:3px;padding:6px!important;}
   .touch-button span{font-size:9px!important;letter-spacing:.06em;}
+  .touch-button::before{content:"";position:absolute;inset:-8px;border-radius:16px;}
   #touch-attack{grid-column:2;grid-row:1;background:#46354be6!important;}
   #touch-dash{grid-column:1;grid-row:1;}
   #touch-interact{grid-column:2;grid-row:2;}
@@ -69,7 +70,7 @@ button {touch-action:manipulation;}
 }
 @media (hover:none) and (pointer:coarse) and (orientation:landscape) {
   /* Keep a 768x480 native aspect ratio while reserving actual room for both thumbs. */
-  .game-frame #game {height:min(100dvh, calc((100vw - 188px) / 1.6))!important;width:min(calc(100vw - 188px), 160dvh)!important;flex:none!important;aspect-ratio:8/5;object-fit:contain!important;}
+  .game-frame #game {height:min(100dvh, calc((100vw - 214px) / 1.6))!important;width:min(calc(100vw - 214px), 160dvh)!important;flex:none!important;aspect-ratio:8/5;object-fit:contain!important;}
   .game-actions{bottom:calc(9px + env(safe-area-inset-bottom))!important;}
   .mobile-controls{padding:0 calc(7px + env(safe-area-inset-right)) 0 calc(7px + env(safe-area-inset-left));}
   .dialogue-overlay{padding:0 calc(10px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left))!important;}
@@ -85,10 +86,10 @@ button {touch-action:manipulation;}
   .boss-hud{max-width:min(280px,43vw);top:calc(7px + env(safe-area-inset-top))!important;}
   .corner-pause{padding:6px 8px!important;}
   .corner-pause span{display:none;}
-  .joystick-zone{width:clamp(80px,20vh,116px);height:clamp(80px,20vh,116px);}
-  .joystick-knob{width:clamp(38px,10vh,52px);height:clamp(38px,10vh,52px);}
-  .action-buttons{width:clamp(112px,28vh,146px);gap:5px;}
-  .touch-button{min-height:clamp(39px,11vh,54px);font-size:clamp(16px,4.5vh,20px)!important;}
+  .joystick-zone{width:clamp(96px,22vh,132px);height:clamp(96px,22vh,132px);}
+  .joystick-knob{width:clamp(44px,11vh,58px);height:clamp(44px,11vh,58px);}
+  .action-buttons{width:clamp(132px,31vh,166px);gap:7px;}
+  .touch-button{min-height:clamp(46px,12vh,62px);font-size:clamp(17px,4.8vh,22px)!important;}
   .touch-button span{font-size:8px!important;}
   .interaction-prompt{bottom:10px;max-width:52vw;}
   .intro-content h2{font-size:clamp(26px,7vh,43px)!important;}
@@ -103,19 +104,19 @@ button {touch-action:manipulation;}
 @media (hover:none) and (pointer:coarse) and (orientation:portrait){
   .game-frame #game{width:100%!important;height:auto!important;max-height:60dvh!important;aspect-ratio:8/5;object-fit:contain!important;}
   .mobile-controls {padding:0 12px calc(15px + env(safe-area-inset-bottom));}
-  .joystick-zone {width:120px;height:120px;}
-  .action-buttons {width:150px;}
+  .joystick-zone {width:136px;height:136px;}
+  .action-buttons {width:170px;}
   .dialogue-overlay{padding-bottom:155px!important;}
   .dialogue-stage .dialogue-box{padding-right:64px!important;}
   .rotate-hint{display:block;}
   .intro-content{max-height:94dvh!important;}
 }
 @media (hover:none) and (pointer:coarse) and (max-width:360px){
- .joystick-zone{width:105px;height:105px;}.action-buttons{width:134px;gap:5px}.touch-button{min-height:50px}
+ .joystick-zone{width:118px;height:118px;}.action-buttons{width:150px;gap:6px}.touch-button{min-height:56px;min-width:54px}
 }
 @media (hover:none) and (pointer:coarse) and (orientation:landscape) and (max-height:340px){
-  .joystick-zone{width:74px;height:74px}.joystick-knob{width:36px;height:36px}
-  .action-buttons{width:110px;}.touch-button{min-height:36px;padding:2px!important}
+  .joystick-zone{width:82px;height:82px}.joystick-knob{width:40px;height:40px}
+  .action-buttons{width:120px;gap:4px}.touch-button{min-height:40px;min-width:40px;padding:3px!important}
   .touch-button span{font-size:7px!important}
   .player-hud .health #hearts{font-size:13px!important;}
   .intro-content .eyebrow{display:none}
