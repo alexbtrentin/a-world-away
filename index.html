@@ -1,0 +1,159 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#0d171d">
+  <meta name="description" content="A World Away: a polished pixel-art adventure with five playable chapters, glowing clues, companion puzzles, and original fantasy worlds.">
+  <title>A World Away | Chapters I–V</title>
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <meta name="apple-mobile-web-app-title" content="A World Away">
+  <meta name="mobile-web-app-capable" content="yes">
+  <link rel="manifest" href="manifest.webmanifest">
+  <link rel="apple-touch-icon" href="apple-touch-icon.png">
+  <link rel="icon" type="image/png" href="favicon.png">
+  <link rel="stylesheet" href="styles.css">
+  <link rel="stylesheet" href="mobile.css">
+</head>
+<body>
+  <div class="atmosphere" aria-hidden="true"></div>
+  <main class="shell">
+    <div class="game-layout">
+      <section class="play-column" aria-label="Pixel adventure game">
+        <div class="game-frame">
+          <div class="frame-head">
+            <div class="frame-location"><span class="game-mark">✧ <b>A WORLD <em>AWAY</em></b></span><span class="zone-label"><span id="header-chapter">CHAPTER I</span> · <span id="location">THE MOSS GATE</span></span><span id="header-region" class="visually-hidden">THE FORGOTTEN TEMPLE</span></div>
+            <div class="frame-head-actions"><div class="frame-progress"><span class="stat-caption">SEALS</span><span id="seals">0 / 3</span></div><button type="button" class="game-toolbar-button" id="ingame-chapters" title="Choose a chapter">▦ <span>Chapters</span></button><button type="button" class="game-toolbar-button" id="sound-toggle" aria-label="Toggle music" title="Toggle sound">♫ <span>Music on</span></button><button type="button" class="game-toolbar-button" id="restart" title="Start over (erase saved journey)">↻ <span>Restart</span></button><button type="button" class="game-toolbar-button" id="pause-button" aria-label="Pause game (Escape)" aria-pressed="false" title="Pause or resume (Esc)">Ⅱ <span>Pause</span></button><button type="button" class="game-toolbar-button" id="journal-button" aria-haspopup="dialog" aria-expanded="false" title="Open quest and inscription journal (J)">▤ <span>Journal</span></button><button type="button" class="game-toolbar-button" id="fullscreen-toggle" aria-label="Enter fullscreen" title="Expand the game to fullscreen">⛶ <span>Fullscreen</span></button></div>
+          </div>
+          <div class="chapter-trail" aria-label="Chapter progress"></div>
+          <div class="canvas-holder">
+            <button type="button" class="corner-pause" id="corner-pause" aria-label="Pause and open game options" title="Pause / Options (Esc)">Ⅱ <span>MENU</span></button>
+            <canvas id="game" width="768" height="480" tabindex="0" aria-label="Top-down adventure game: move with WASD or arrow keys; Space to attack, E to interact, Shift to dash, Q for Pip’s sense in the Gloam Maze"></canvas>
+            <div class="player-hud" aria-label="Player health and warmth"><div class="health" aria-label="Player health"><span class="stat-caption">HP</span><span id="hearts">♥ ♥ ♥ ♥ ♥ ♥</span></div><div class="warmth-hud hidden" id="warmth-hud" aria-label="Warmth"><span class="stat-caption">WARMTH</span><div class="warmth-track"><div id="warmth-fill"></div></div><span id="warmth-value">100%</span></div></div>
+            <div class="rotate-hint hidden" id="rotate-hint">↻ Turn sideways for the best adventure <button type="button" id="rotate-dismiss" aria-label="Dismiss rotation tip">✕</button></div>
+            <div class="screen-tint" aria-hidden="true"></div>
+            <div class="objective-flash" id="objective-flash" aria-live="polite"></div>
+            <div class="interaction-prompt" id="interaction-prompt" aria-live="polite"></div>
+            <div class="boss-hud hidden" id="boss-hud"><span class="boss-title">THE STONE WARDEN</span><div class="boss-track"><div id="boss-fill"></div></div></div>
+            <div class="controls-overlay" id="controls-overlay" aria-label="Keyboard controls"><span><kbd>WASD</kbd> MOVE</span><span><kbd>E</kbd> INTERACT</span><span><kbd>SPACE</kbd> ATTACK</span><span><kbd>SHIFT</kbd> DASH</span><span class="controls-gloam"><kbd>Q</kbd> PIP SENSE</span><span><kbd>J</kbd> JOURNAL</span><span><kbd>ESC</kbd> MENU</span></div>
+            <div id="intro" class="intro-overlay">
+              <div class="intro-content gift-title-menu">
+                <div class="intro-decoration" aria-hidden="true">✦ <span>✧</span> ✦</div>
+                <p class="eyebrow" id="intro-subtitle">AN ADVENTURE BEYOND THE KNOWN</p>
+                <h2 id="intro-title">A WORLD<br><em>AWAY</em></h2>
+                <p class="intro-description" id="intro-description">A world out of balance. An ancient mystery. One very unexpected adventure.</p>
+                <div class="gift-menu-actions">
+                  <button class="primary-button gift-play-button" type="button" id="start">▶ &nbsp; PLAY</button>
+                  <button type="button" class="subtle-button gift-fullscreen-button" id="title-fullscreen" aria-label="Enter fullscreen" aria-pressed="false" title="Expand A World Away to fullscreen">⛶ &nbsp; FULLSCREEN</button>
+                  <button type="button" class="install-help-button" id="install-help-button">▣ &nbsp; INSTALL ON IPHONE</button>
+                  <button type="button" class="subtle-button gift-newgame hidden" id="new-journey">✧ &nbsp; NEW JOURNEY</button>
+                  <button type="button" class="subtle-button gift-replay-toggle hidden" id="chapter-replay-toggle" aria-expanded="false" aria-controls="chapter-replay-panel">▦ &nbsp; CHAPTER SELECT</button>
+                  <button class="finale-preview-launch hidden" type="button" id="preview-ending" aria-label="Replay the ending cinematic, contains story spoilers">✧ &nbsp; REPLAY ENDING</button>
+                </div>
+                <section id="chapter-replay-panel" class="chapter-replay-panel hidden" aria-label="Replay unlocked chapters">
+                  <p class="chapter-access-note">ADVENTURE COMPLETE · CHOOSE A CHAPTER TO REPLAY</p>
+                  <div class="chapter-picker" aria-label="Select a chapter to replay">
+                    <button type="button" class="chapter-option" data-chapter-start="0"><span class="chapter-icon">✧</span><span><b>CHAPTER I</b><small>The Forgotten Temple</small></span></button>
+                    <button type="button" class="chapter-option" data-chapter-start="1"><span class="chapter-icon">☁</span><span><b>CHAPTER II</b><small>The Shattered Isles</small></span></button>
+                    <button type="button" class="chapter-option" data-chapter-start="2"><span class="chapter-icon">❄</span><span><b>CHAPTER III</b><small>The Frostbound Peaks</small></span></button>
+                    <button type="button" class="chapter-option" data-chapter-start="3"><span class="chapter-icon">◇</span><span><b>CHAPTER IV</b><small>The Endless Labyrinth</small></span></button>
+                    <button type="button" class="chapter-option" data-chapter-start="4"><span class="chapter-icon">✦</span><span><b>CHAPTER V</b><small>The Last Horizon</small></span></button>
+                  </div>
+                </section>
+                <p class="intro-note">EXPLORE · FIGHT · SOLVE · SURVIVE</p>
+              </div>
+            </div>
+            <div id="dialogue" class="dialogue-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="dialogue-name">
+              <div class="dialogue-stage" id="dialogue-stage">
+                <div class="speaker-portraits" id="speaker-portraits" aria-hidden="true">
+                  <div class="character-portrait portrait-primary" id="portrait-primary"></div>
+                  <div class="character-portrait portrait-secondary" id="portrait-secondary"></div>
+                </div>
+                <div class="dialogue-box" id="dialogue-box"><div class="dialogue-copy"><div id="dialogue-name" class="speaker">ANCIENT INSCRIPTION</div><p id="dialogue-text"></p><span class="continue-hint">E / ENTER TO CONTINUE <span>▾</span></span></div><button id="dialogue-next" class="dialogue-next" type="button" aria-label="Continue dialogue">›</button></div>
+              </div>
+            </div>
+            <div id="fragment-scene" class="fragment-scene hidden" role="dialog" aria-modal="true" aria-label="Mysterious artifact found">
+              <div class="fragment-scene-card"><p class="eyebrow">AN UNWRITTEN MYSTERY</p>
+                <div class="fragment-light" aria-hidden="true"><span id="fragment-symbol">✦</span></div>
+                <h2 id="fragment-name">MYSTERIOUS FRAGMENT</h2><p id="fragment-discovery">A strange fragment has been found.</p>
+                <p id="fragment-progress" class="fragment-progress">1 / 5 FRAGMENTS</p>
+                <button type="button" class="primary-button" id="fragment-continue">✦ &nbsp; KEEP THE FRAGMENT</button>
+              </div>
+            </div>
+            <div id="pause" class="pause-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="pause-heading">
+              <div class="pause-card"><p class="eyebrow">THE ADVENTURE CAN WAIT</p><h2 id="pause-heading">PAUSED</h2>
+                <p>The world is standing still. Even Pip is impressed.</p>
+                <div class="pause-now-playing">♫ NOW PLAYING <strong id="pause-music-title">Mosslight Waltz</strong></div>
+                <div class="volume-control"><label for="music-volume">Music volume</label><input id="music-volume" type="range" min="0" max="100" value="55" step="5"><output id="music-volume-value" for="music-volume">55%</output></div>
+                <button type="button" id="pause-resume" class="primary-button">▶ &nbsp; RESUME ADVENTURE</button>
+                <div class="pause-secondary"><button type="button" id="pause-sound-toggle" class="subtle-button">♫ Music on/off</button><button type="button" id="pause-chapters" class="subtle-button">⌂ Main Menu</button><button type="button" id="pause-journal" class="subtle-button">▤ Journal</button><button type="button" id="pause-restart" class="subtle-button">↻ Restart chapter</button><button type="button" id="pause-fullscreen" class="subtle-button">⛶ Fullscreen</button></div>
+                <small>ESC TO RESUME</small>
+              </div>
+            </div>
+            <div id="death" class="death-overlay hidden"><div class="outcome"><p class="eyebrow">THE RUINS CLAIM ANOTHER TRAVELER</p><h2>NOT THIS TIME.</h2><p>Your puzzle progress is safe. Healing chests restock when you try again.</p><button id="retry" class="primary-button" type="button">↻ &nbsp; TRY AGAIN</button></div></div>
+            <div id="victory" class="victory-overlay hidden"><div class="victory-particles" aria-hidden="true">✦ &nbsp; ✧ &nbsp; ✦</div><p class="eyebrow">THE FIRST SEAL IS RESTORED</p><h2>CHAPTER <em>CLEARED</em></h2><p class="victory-tagline">You entered alone. You won't have to explore the next world that way.</p><div class="party-unlocked"><span class="party-star">✧</span><div><strong>NEW PARTY MEMBERS</strong><span>ROOK + PIP</span></div></div><p class="victory-next">NEXT QUEST UNLOCKED: THE SHATTERED ISLES</p><button type="button" id="continue-ch2" class="primary-button">✦ &nbsp; CONTINUE TO CHAPTER II</button><button type="button" id="replay" class="subtle-button">↻ Replay Chapter I</button></div>
+            <div id="victory2" class="victory-overlay hidden"><div class="victory-particles">✧ &nbsp; ✦ &nbsp; ✧</div><p class="eyebrow">THE SECOND SEAL IS RESTORED</p><h2>THE ISLES <em>ENDURE</em></h2><p class="victory-tagline">You found a path through the broken skies. Rook claims full credit. Pip is asleep again.</p><div class="party-unlocked"><span class="party-star">✦</span><div><strong>CHAPTER II COMPLETE</strong><span>THE SHATTERED ISLES</span></div></div><p class="victory-next">NEXT QUEST UNLOCKED: THE FROSTBOUND PEAKS</p><button type="button" id="continue-ch3" class="primary-button">❄ &nbsp; CONTINUE TO CHAPTER III</button><button type="button" id="chapter-menu-victory2" class="subtle-button">▦ Chapter Select</button><button type="button" id="return-ch2" class="subtle-button">↻ Explore the Isles Again</button></div>
+            <div id="victory3" class="victory-overlay hidden"><div class="victory-particles">❄ &nbsp; ✦ &nbsp; ❄</div><p class="eyebrow">THE THIRD SEAL IS RESTORED</p><h2>THE WINTER <em>BREAKS</em></h2><p class="victory-tagline">The three seals stabilize the drifting worlds, then reveal a star map: the rifts can only be sealed at their source. The Horizon Key waits beneath the mountain.</p><div class="seal-revelation" aria-label="Three seals reveal a route to the Horizon Key"><span class="seal-point a">✦</span><span class="seal-point b">✧</span><span class="seal-point c">✦</span><span class="seal-route" aria-hidden="true"></span><span class="seal-destination">◇<small>HORIZON KEY</small></span></div><div class="party-unlocked"><span class="party-star">✧</span><div><strong>CHAPTER III COMPLETE</strong><span>THE FROSTBOUND PEAKS</span></div></div><p class="victory-next">NEXT QUEST: THE ENDLESS LABYRINTH</p><button type="button" id="continue-ch4" class="primary-button">◇ &nbsp; CONTINUE TO CHAPTER IV</button><button type="button" id="chapter-menu-victory3" class="subtle-button">▦ &nbsp; CHAPTER SELECT</button></div>
+            <div id="victory4" class="victory-overlay hidden"><div class="victory-particles">◇ &nbsp; ✦ &nbsp; ◇</div><p class="eyebrow">THE HORIZON KEY IS YOURS</p><h2>THE MAZE <em>REMEMBERS</em></h2><p class="victory-tagline">In the darkest halls, even the most confident explorer knows when to hold on to his friends.</p><div class="party-unlocked"><span class="party-star">◇</span><div><strong>CHAPTER IV COMPLETE</strong><span>THE ENDLESS LABYRINTH</span></div></div><p class="victory-next">NEXT QUEST: THE LAST HORIZON · CHAPTER V</p><button type="button" id="continue-ch5" class="primary-button">✦ &nbsp; CONTINUE TO CHAPTER V</button><button type="button" id="chapter-menu-victory4" class="subtle-button">▦ &nbsp; CHOOSE A CHAPTER</button></div>
+            <div id="finale" class="finale-overlay hidden" role="dialog" aria-modal="true" aria-labelledby="finale-title">
+              <div class="finale-stars" aria-hidden="true">✦ ✧ ✦</div>
+              <div class="finale-card"><div id="emblem-reveal" class="emblem-reveal" aria-label="Two worlds connected in a single emblem" aria-hidden="true">
+                <div class="shard-constellation" id="shard-constellation" aria-hidden="true">
+                  <span style="--sx:-85px;--sy:-45px">✦</span><span style="--sx:28px;--sy:-61px">◆</span><span style="--sx:76px;--sy:13px">✧</span><span style="--sx:-46px;--sy:55px">◇</span><span style="--sx:53px;--sy:62px">✺</span>
+                </div>
+                <img class="pixel-emblem" src="art/unwritten-emblem-pixel.png" width="768" height="768" alt="Pixel-art crest joining Brazil and the United States in one golden magical emblem" decoding="async" />
+              </div>
+              <p class="finale-eyebrow" id="finale-eyebrow">THE LAST HORIZON</p><h2 id="finale-title">A WORLD RESTORED</h2><p id="finale-text"></p><div class="finale-progress" id="finale-progress"></div><div id="finale-preview-tools" class="finale-preview-tools hidden"><span>CREATOR PREVIEW · SAVED PROGRESS IS UNCHANGED</span><div><button type="button" class="subtle-button" id="finale-preview-prev">← PREVIOUS</button><button type="button" class="subtle-button" id="finale-preview-exit">✕ BACK TO MENU</button></div></div><button type="button" class="primary-button" id="finale-next">CONTINUE ✦</button></div>
+            </div>
+          </div>
+          <div class="game-actions">
+            <div class="keyboard-guide"><span><kbd>WASD</kbd> MOVE</span><span><kbd>SPACE</kbd> ATTACK</span><span><kbd>E</kbd> INTERACT</span><span><kbd>SHIFT</kbd> DASH</span><span class="clue-guide">✧ GLOWING SCROLL = CLUE</span></div>
+            <div class="mobile-controls" aria-label="Touch game controls">
+              <div class="joystick-zone" id="mobile-joystick" role="group" aria-label="Move the Wanderer with virtual joystick"><div class="joystick-knob" id="joystick-knob" aria-hidden="true">✦</div></div>
+              <div class="dpad"><button class="touch-button up" data-direction="up" aria-label="Move up">▲</button><button class="touch-button left" data-direction="left" aria-label="Move left">◀</button><button class="touch-button down" data-direction="down" aria-label="Move down">▼</button><button class="touch-button right" data-direction="right" aria-label="Move right">▶</button></div>
+              <div class="action-buttons"><button class="touch-button attack" id="touch-attack">⚔ <span>ATTACK</span></button><button class="touch-button sense" id="touch-sense" aria-label="Ask Pip to sense a waystone">✧ <span>SENSE</span></button><button class="touch-button dash" id="touch-dash">➜ <span>DASH</span></button><button class="touch-button interact" id="touch-interact">✧ <span>USE</span></button></div>
+            </div>
+          </div>
+          <div class="frame-foot"><span>✧ ORIGINAL PIXEL-ART ADVENTURE · J FOR JOURNAL</span><span>⛶ FULLSCREEN · ESC TO PAUSE · <span id="chapter-counter">CHAPTER 01 / 05</span></span></div>
+          <button type="button" class="drawer-backdrop" id="journal-backdrop" aria-label="Close journal"></button>
+      <aside class="sidebar" id="journal-drawer" aria-label="Quest and inscription journal" role="dialog" aria-modal="true" aria-hidden="true" tabindex="-1">
+        <div class="drawer-header"><strong>✧ ADVENTURER'S JOURNAL</strong><button type="button" id="journal-close" class="game-toolbar-button" aria-label="Close journal">✕ <span>Close</span></button></div>
+        <section class="journal-card">
+          <p class="card-eyebrow">✦ THE WANDERER'S JOURNAL</p>
+          <div class="card-divider"></div>
+          <p class="label">CURRENT QUEST</p>
+          <h2 id="quest-title">Into the Forgotten Temple</h2>
+          <p class="quest-description" id="quest-description">Enter the ruin and investigate its strange power.</p>
+          <div class="quest-progress-top"><span>CHAPTER PROGRESS</span><span id="quest-progress-label">0%</span></div>
+          <div class="progress-track"><div id="quest-progress"></div></div>
+          <div class="objectives" id="objectives"></div>
+        </section>
+        <section class="clue-card unfound" id="clue-card" aria-label="Discovered inscriptions">
+          <div class="clue-heading"><span>✧ INSCRIPTION JOURNAL</span><span id="clue-count">0 / 13 FOUND</span></div>
+          <strong id="clue-title">UNDISCOVERED INSCRIPTION</strong>
+          <p id="clue-text">Look for softly glowing parchment to uncover puzzle instructions.</p>
+          <div class="clue-tabs" aria-label="Browse discovered inscriptions"><button type="button" data-note="0" disabled>???</button><button type="button" data-note="1" disabled>???</button><button type="button" data-note="3" disabled>???</button><button type="button" data-note="4" disabled>???</button><button type="button" data-note="6" disabled>???</button><button type="button" data-note="7" disabled>???</button><button type="button" data-note="8" disabled>???</button><button type="button" data-note="9" disabled>???</button><button type="button" data-note="10" disabled>???</button><button type="button" data-note="11" disabled>???</button><button type="button" data-note="12" disabled>???</button><button type="button" data-note="13" disabled>???</button><button type="button" data-note="14" disabled>???</button></div>
+        </section>
+        <section class="fragment-card" aria-label="Collected mysterious relic fragments"><div class="fragment-heading"><span>✦ THE UNWRITTEN EMBLEM</span><span id="fragment-count">0 / 5</span></div><p>Cloudy pieces of an artifact nobody can identify. Their meaning remains a mystery.</p><div id="fragment-tray" class="fragment-tray" aria-live="polite"><span>?</span><span>?</span><span>?</span><span>?</span><span>?</span></div></section>
+        <section class="tips-card"><div class="tip-head"><span>✧</span><strong>FIELD NOTES</strong></div><p id="field-note">Old temples are full of secrets. And probably things with teeth.</p><div class="field-art" aria-hidden="true">◈ &nbsp; ⟡ &nbsp; ◈</div></section>
+        <section class="equipment-card"><p class="card-eyebrow">✧ ADVENTURER'S KIT</p><div class="equip-row"><div class="equip-icon">⚔</div><div><strong>Traveler's Blade</strong><small>Space to swing</small></div></div><div class="equip-row"><div class="equip-icon">➜</div><div><strong>Quickstep</strong><small>Shift to evade attacks</small></div><span class="recharge" id="dash-label">READY</span></div><div class="equip-row"><div class="equip-icon">✦</div><div><strong>Celestial Seal</strong><small id="relic-label">Not yet recovered</small></div></div></section>
+      </aside>
+        </div>
+      </section>
+
+    </div>
+  </main>
+  <div id="install-sheet" class="install-sheet hidden" role="dialog" aria-modal="true" aria-label="Install game on iPhone">
+    <div class="install-card"><p class="eyebrow">YOUR ADVENTURE, ONE TAP AWAY</p><h2>Install on iPhone</h2>
+      <ol><li>Open this game’s <strong>HTTPS link in Safari</strong>.</li><li>Tap <strong>Share</strong> (square with an up arrow), then <strong>Add to Home Screen</strong>.</li><li>Keep <strong>Open as Web App</strong> enabled when shown, then tap <strong>Add</strong>.</li><li>Open <strong>A World Away</strong> from the Home Screen and turn your phone sideways.</li></ol>
+      <p id="offline-status" class="install-note">After the game loads over HTTPS, its files will be cached for offline play. Install before beginning so progress is saved in the Home Screen app.</p>
+      <button type="button" id="install-close" class="primary-button install-close">✦ &nbsp; BACK TO ADVENTURE</button>
+    </div>
+  </div>
+  <script src="config.js"></script>
+  <script src="music.js"></script>
+  <script src="game.js"></script>
+  <script src="mobile.js"></script>
+</body>
+</html>

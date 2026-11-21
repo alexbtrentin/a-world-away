@@ -1,0 +1,123 @@
+/* A World Away | iPhone / touch gameplay enhancements. No outside libraries. */
+:root {color-scheme: dark;}
+html, body {overscroll-behavior:none; -webkit-tap-highlight-color:transparent; -webkit-touch-callout:none;}
+button {touch-action:manipulation;}
+#game {image-rendering:pixelated; object-fit:contain!important;}
+.game-frame .canvas-holder {display:flex!important; align-items:center; justify-content:center;}
+.mobile-controls {user-select:none; -webkit-user-select:none;}
+.joystick-zone {display:none;}
+.install-help-button {display:none; margin:5px auto 8px; min-height:36px; color:#eed4a4; background:#162c39ea; border:1px solid #b99a68; border-radius:6px; padding:8px 15px; font:bold 11px ui-monospace,monospace; letter-spacing:.075em;}
+.install-help-button:hover, .install-help-button:focus-visible {background:#284352;}
+.install-sheet {position:fixed; z-index:500; inset:0; background:#06111ced; display:grid; place-items:center; padding:18px; overflow:auto; line-height:normal;}
+.install-sheet.hidden {display:none!important;}
+.install-card {width:min(410px,100%);padding:24px;max-height:90dvh;overflow:auto; background:#132838; border:2px solid #d9ba7a;box-shadow:0 25px 70px #0009;border-radius:10px;text-align:left; color:#e9e8dc;}
+.install-card h2 {font:700 26px Georgia,serif;color:#ffe0a8;margin:4px 0 12px;}
+.install-card p,.install-card li {font:14px/1.6 Georgia,serif;}
+.install-card ol {padding-left:23px;}
+.install-card strong{color:#ffe0a8;}
+.install-card .install-note {font-size:12px;color:#b8c7c5;}
+.install-close {display:block;margin:16px auto 0;width:100%;min-height:44px;}
+.rotate-hint {position:absolute;z-index:8;top:calc(env(safe-area-inset-top) + 61px);left:50%; transform:translateX(-50%);max-width:80%;text-align:center;line-height:1.3;font:700 11px ui-monospace,monospace;color:#f4e5c0;background:#102735ef;border:1px solid #bca071;border-radius:6px;padding:8px 12px;box-shadow:0 5px 15px #0008;}
+.rotate-hint.hidden {display:none!important;}
+.rotate-hint button {margin-left:8px;color:#ffe0a8;border:0;background:none;font:inherit;cursor:pointer;}
+.game-frame:has(#intro:not(.hidden)) .rotate-hint,.game-frame:has(#dialogue:not(.hidden)) .rotate-hint,.game-frame:has(#pause:not(.hidden)) .rotate-hint,.game-frame:has(#finale:not(.hidden)) .rotate-hint {display:none!important;}
+/* Buttons never cover menu and dialogue overlays. */
+.game-frame:has(#dialogue:not(.hidden)) .game-actions,
+.game-frame:has(#pause:not(.hidden)) .game-actions,
+.game-frame:has(#fragment-scene:not(.hidden)) .game-actions,
+.game-frame:has(#death:not(.hidden)) .game-actions,
+.game-frame:has(#victory:not(.hidden)) .game-actions,
+.game-frame:has(#victory2:not(.hidden)) .game-actions,
+.game-frame:has(#victory3:not(.hidden)) .game-actions,
+.game-frame:has(#victory4:not(.hidden)) .game-actions {visibility:hidden!important;pointer-events:none!important;}
+.dialogue-box {touch-action:manipulation;}
+.dialogue-box:has(.dialogue-next):not(:has(button:disabled)) {cursor:pointer;}
+/* iPhone Home Screen installs and mobile browser: use safe areas. */
+@media (hover:none) and (pointer:coarse) {
+  html,body {height:100%;overflow:hidden;}
+  .game-frame, .shell {height:100dvh!important;}
+  .mobile-controls {display:flex!important;justify-content:space-between;align-items:flex-end;pointer-events:none!important;}
+  .game-actions {display:block!important; position:absolute!important;left:0;right:0;bottom:0;z-index:7;padding:0!important;background:none!important;border:0!important;pointer-events:none!important;}
+  .keyboard-guide {display:none!important;}
+  .controls-overlay {display:none!important;}
+  .mobile-controls .dpad {display:none!important;}
+  .joystick-zone {pointer-events:auto;touch-action:none;position:relative;display:grid;place-items:center;width:116px;height:116px;flex:none;border-radius:50%;background:#0c243aab;border:2px solid #bdad7a88;box-shadow:inset 0 0 24px #274657b0, 0 5px 18px #0006;overscroll-behavior:contain;}
+  .joystick-zone:before {content:"";position:absolute;inset:25%;border:1px dashed #ebd8a57c;border-radius:50%;}
+  .joystick-knob {display:grid;place-items:center;pointer-events:none;position:relative;width:52px;height:52px;border-radius:50%;border:2px solid #f0d498;background:radial-gradient(circle at 35% 30%,#6c8596,#234153 68%);box-shadow:0 5px 12px #0009;color:#ffe7ad;font-size:21px;transition:transform 0.06s linear;}
+  .joystick-zone:active .joystick-knob,.joystick-zone.active .joystick-knob{box-shadow:0 0 17px #f6d68d80, 0 4px 12px #000a;}
+  .action-buttons{pointer-events:auto!important;touch-action:none;display:grid!important;grid-template-columns:repeat(2,minmax(51px,1fr));grid-template-rows:repeat(2,1fr);gap:9px;width:146px;}
+  .touch-button{pointer-events:auto;touch-action:manipulation;-webkit-user-select:none;user-select:none;min-height:54px;min-width:50px;border-radius:12px!important;border:1px solid #cfb782d1!important;background:#142b3fe8!important;box-shadow:0 4px 13px #0008!important;font-size:20px!important;line-height:1.1!important;display:flex!important;align-items:center;justify-content:center;flex-direction:column;gap:3px;padding:6px!important;}
+  .touch-button span{font-size:9px!important;letter-spacing:.06em;}
+  #touch-attack{grid-column:2;grid-row:1;background:#46354be6!important;}
+  #touch-dash{grid-column:1;grid-row:1;}
+  #touch-interact{grid-column:2;grid-row:2;}
+  #touch-sense{grid-column:1;grid-row:2;}
+  body:not(.gloam-active) #touch-sense {display:none!important;}
+  .mobile-controls .touch-button:active{filter:brightness(1.36)}
+  .player-hud{top:calc(8px + env(safe-area-inset-top));left:calc(9px + env(safe-area-inset-left));padding:5px 8px!important;}
+  .corner-pause{top:calc(8px + env(safe-area-inset-top));right:calc(9px + env(safe-area-inset-right));}
+  .intro-content {max-height:calc(100dvh - 16px);overflow:auto;scrollbar-width:thin;}
+  .install-help-button {display:block;}
+  .intro-note {display:none;}
+  .interaction-prompt{z-index:6;bottom:138px;max-width:65vw;}
+  .dialogue-overlay{padding-bottom:10px!important;}
+  .continue-hint {font-size:0!important;}
+  .continue-hint::before {content:'TAP TO CONTINUE';font:700 10px ui-monospace,monospace;letter-spacing:.12em;}
+  .continue-hint span{display:none!important;}
+  .dialogue-stage{max-width:96%;}
+  .dialogue-stage .dialogue-box{min-height:90px;}
+}
+@media (hover:none) and (pointer:coarse) and (orientation:landscape) {
+  /* Keep a 768x480 native aspect ratio while reserving actual room for both thumbs. */
+  .game-frame #game {height:min(100dvh, calc((100vw - 188px) / 1.6))!important;width:min(calc(100vw - 188px), 160dvh)!important;flex:none!important;aspect-ratio:8/5;object-fit:contain!important;}
+  .game-actions{bottom:calc(9px + env(safe-area-inset-bottom))!important;}
+  .mobile-controls{padding:0 calc(7px + env(safe-area-inset-right)) 0 calc(7px + env(safe-area-inset-left));}
+  .dialogue-overlay{padding:0 calc(10px + env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom)) calc(10px + env(safe-area-inset-left))!important;}
+  .dialogue-stage{padding-top:65px!important;width:min(770px,96%);}
+  .speaker-portraits{height:122px!important;}
+  .portrait-primary{height:108px!important;width:96px!important;}
+  .portrait-secondary{height:73px!important;width:65px!important;}
+  .dialogue-stage .dialogue-box{padding:8px 82px 9px 108px!important;min-height:78px!important;}
+  .dialogue-stage.single-speaker .dialogue-box{padding-right:22px!important;}
+  .dialogue-stage .dialogue-copy p{font-size:clamp(11px,1.9vw,15px)!important;line-height:1.38!important;}
+  .dialogue-stage.narration .dialogue-box{padding:13px 20px!important;min-height:80px!important;}
+  .dialogue-stage.narration .dialogue-copy p{font-size:clamp(12px,2vw,16px)!important;}
+  .boss-hud{max-width:min(280px,43vw);top:calc(7px + env(safe-area-inset-top))!important;}
+  .corner-pause{padding:6px 8px!important;}
+  .corner-pause span{display:none;}
+  .joystick-zone{width:clamp(80px,20vh,116px);height:clamp(80px,20vh,116px);}
+  .joystick-knob{width:clamp(38px,10vh,52px);height:clamp(38px,10vh,52px);}
+  .action-buttons{width:clamp(112px,28vh,146px);gap:5px;}
+  .touch-button{min-height:clamp(39px,11vh,54px);font-size:clamp(16px,4.5vh,20px)!important;}
+  .touch-button span{font-size:8px!important;}
+  .interaction-prompt{bottom:10px;max-width:52vw;}
+  .intro-content h2{font-size:clamp(26px,7vh,43px)!important;}
+  .intro-description{display:none!important;}
+  .intro-decoration{display:none!important;}
+  .intro-content .eyebrow{font-size:10px;}
+  .gift-menu-actions{gap:5px;}
+  .gift-play-button,.gift-fullscreen-button{padding:8px 13px!important;}
+  .install-help-button{margin:4px auto;padding:7px 13px;}
+  .intro-content{padding:9px 12px!important;}
+}
+@media (hover:none) and (pointer:coarse) and (orientation:portrait){
+  .game-frame #game{width:100%!important;height:auto!important;max-height:60dvh!important;aspect-ratio:8/5;object-fit:contain!important;}
+  .mobile-controls {padding:0 12px calc(15px + env(safe-area-inset-bottom));}
+  .joystick-zone {width:120px;height:120px;}
+  .action-buttons {width:150px;}
+  .dialogue-overlay{padding-bottom:155px!important;}
+  .dialogue-stage .dialogue-box{padding-right:64px!important;}
+  .rotate-hint{display:block;}
+  .intro-content{max-height:94dvh!important;}
+}
+@media (hover:none) and (pointer:coarse) and (max-width:360px){
+ .joystick-zone{width:105px;height:105px;}.action-buttons{width:134px;gap:5px}.touch-button{min-height:50px}
+}
+@media (hover:none) and (pointer:coarse) and (orientation:landscape) and (max-height:340px){
+  .joystick-zone{width:74px;height:74px}.joystick-knob{width:36px;height:36px}
+  .action-buttons{width:110px;}.touch-button{min-height:36px;padding:2px!important}
+  .touch-button span{font-size:7px!important}
+  .player-hud .health #hearts{font-size:13px!important;}
+  .intro-content .eyebrow{display:none}
+}
+@media (prefers-reduced-motion:reduce){.joystick-knob{transition:none;}}
