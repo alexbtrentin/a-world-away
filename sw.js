@@ -1,5 +1,5 @@
 /* A World Away: offline-first game shell (keeps localStorage saves untouched). */
-const CACHE_NAME = 'awa-gift-mobile-2026-11-20-v1';
+const CACHE_NAME = 'awa-gift-mobile-2026-11-20-v2-landscape';
 const OFFLINE_ASSETS = [
   './', './index.html', './styles.css', './mobile.css',
   './config.js', './music.js', './game.js', './mobile.js',

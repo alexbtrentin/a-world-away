@@ -121,3 +121,23 @@ button {touch-action:manipulation;}
   .intro-content .eyebrow{display:none}
 }
 @media (prefers-reduced-motion:reduce){.joystick-knob{transition:none;}}
+
+
+/* Gift edition: landscape-only on touch phones. iOS may ignore manifest orientation.
+   Use a clear, accessible rotate interstitial instead of cramped portrait gameplay. */
+.landscape-gate{display:none;position:absolute;inset:0;z-index:1000;overflow-y:auto;overscroll-behavior:contain;line-height:normal;align-items:center;justify-items:center;padding:calc(14px + env(safe-area-inset-top)) calc(18px + env(safe-area-inset-right)) calc(14px + env(safe-area-inset-bottom)) calc(18px + env(safe-area-inset-left));background:radial-gradient(ellipse at 50% 45%,#263f4d 0%,#0e1f32 60%,#080e1f 100%);color:#f3e8cd;text-align:center}
+.landscape-gate-card{width:min(430px,100%);margin:auto;padding:18px 18px 24px;display:flex;flex-direction:column;align-items:center;gap:9px;border:1px solid #c9ad7970;border-radius:12px;background:#132938ba;box-shadow:inset 0 0 0 4px #0a192b66,0 14px 55px #0008}
+.landscape-gate-stars{font:25px Georgia,serif;letter-spacing:.25em;color:#f5d595;text-shadow:0 0 18px #d4b77266}
+.landscape-turn-art{width:135px;height:118px;margin:6px 0 4px;position:relative;display:grid;place-items:center}
+.landscape-turn-phone{width:56px;height:94px;border:6px solid #f1d293;border-radius:11px;background:#2d4b61;box-shadow:0 0 22px #c6b77b44,inset 0 0 0 3px #091b2c;display:grid;place-items:center;animation:awa-turn-sideways 3.8s ease-in-out infinite}
+.landscape-turn-screen{height:63px;width:37px;display:grid;place-items:center;background:#23405a;border:1px solid #86bbbe;color:#f6d69d;font-size:27px}
+.landscape-turn-arrow{position:absolute;right:1px;top:13px;color:#e1c387;font:44px Georgia,serif;text-shadow:0 0 14px #e6bd8477}
+.landscape-gate-eyebrow{font:700 11px ui-monospace,monospace;letter-spacing:.23em;color:#e9c990;margin:0}
+.landscape-gate h2{font:700 clamp(23px,6vw,32px)/1.16 Georgia,serif;margin:3px 0;color:#ffe4b0}
+.landscape-gate-description{font:15px/1.5 Georgia,serif;max-width:33ch;margin:2px auto 3px;color:#e0e7df}
+.landscape-gate-help{margin:8px auto 0;border-top:1px solid #a6a59a5d;padding:13px 0 0;color:#b9c8c7;font:12px/1.52 ui-monospace,monospace;max-width:37ch}
+.landscape-gate-help strong{color:#f5da9e}
+@keyframes awa-turn-sideways {0%,13%,100%{transform:rotate(0)}30%,76%{transform:rotate(-90deg)}91%{transform:rotate(0)}}
+@media (hover:none) and (pointer:coarse) and (orientation:portrait){.landscape-gate{display:grid!important}}
+@media (prefers-reduced-motion:reduce){.landscape-turn-phone{animation:none;transform:rotate(-90deg)}}
+@media (hover:none) and (pointer:coarse) and (orientation:portrait) and (max-height:580px){.landscape-gate-card{padding:10px}.landscape-turn-art{height:87px}.landscape-gate-stars{display:none}.landscape-gate h2{font-size:22px}.landscape-gate-description{font-size:13px}}

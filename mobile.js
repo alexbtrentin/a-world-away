@@ -40,17 +40,24 @@
     if(e.target.closest('button'))return;
     if(!document.getElementById('dialogue').classList.contains('hidden')) document.getElementById('dialogue-next')?.click();
   });
-  // Landscape is recommended, but never block the player or assume iOS allows orientation lock.
-  const rotate=document.getElementById('rotate-hint');
-  const rotateClose=document.getElementById('rotate-dismiss');
-  let dismissed=false;
-  function showRotate() {
-    const portrait=matchMedia('(orientation:portrait)').matches;
-    const touch=matchMedia('(pointer:coarse)').matches;
-    if(rotate)rotate.classList.toggle('hidden',!portrait||!touch||dismissed);
+  // iOS Home Screen apps do not reliably support orientation locking.
+  // The CSS landscape gate covers portrait screens. Pause combat automatically
+  // when the phone turns upright; resume is manual after rotating back.
+  const portraitQuery=matchMedia('(orientation:portrait)');
+  const touchQuery=matchMedia('(pointer:coarse)');
+  let previousPortraitBlock=false;
+  function syncLandscapeGate() {
+    const blocked=portraitQuery.matches&&touchQuery.matches;
+    if(blocked&&!previousPortraitBlock){
+      document.dispatchEvent(new Event('awa:portrait-blocked'));
+    }
+    previousPortraitBlock=blocked;
   }
-  rotateClose?.addEventListener('click',()=>{dismissed=true;showRotate()});
-  window.addEventListener('resize',showRotate);window.addEventListener('orientationchange',showRotate);showRotate();
+  portraitQuery.addEventListener?.('change',syncLandscapeGate);
+  touchQuery.addEventListener?.('change',syncLandscapeGate);
+  window.addEventListener('resize',syncLandscapeGate);
+  window.addEventListener('orientationchange',syncLandscapeGate);
+  syncLandscapeGate();
   // Web app installation: iPhone/iPad Safari supports Add to Home Screen, not a JS install prompt.
   const installBtn=document.getElementById('install-help-button');
   const installSheet=document.getElementById('install-sheet');

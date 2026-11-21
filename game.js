@@ -1003,6 +1003,8 @@
     canvas.focus({preventScroll:true});
   }
   function togglePause(){if(state.mode==='paused')resumeGame();else pauseGame()}
+  // Landscape-only phone layout: entering portrait during gameplay safely pauses it.
+  document.addEventListener('awa:portrait-blocked',()=>{if(state.mode==='play'||state.mode==='dialogue')pauseGame();});
   function updateSoundButton(){
     el('sound-toggle').innerHTML=state.audioOn?'♫ <span>Music on</span>':'♫ <span>Music off</span>';
     el('sound-toggle').setAttribute('aria-pressed',String(state.audioOn));

@@ -8,7 +8,7 @@ A single, original **five-chapter** game. The story, hidden artifact and finale 
 2. Unzip **`a-world-away-ios-pwa.zip`**. Upload **the contents of the `a-world-away-ios-pwa/` directory** to the repository root. The root must contain `index.html`, `sw.js`, `mobile.css`, `manifest.webmanifest`, and the `icons/` and `art/` folders.
 3. On GitHub, open **Settings → Pages → Build and deployment → Deploy from a branch → `main` → `/(root)` → Save**.
 4. Once the HTTPS address is published (often `https://YOUR-USERNAME.github.io/a-world-away/`), open it on an iPhone in Safari. **Do not use the `file://` URL** for PWA testing.
-5. Safari **Share → Add to Home Screen**, enable **Open as Web App** if asked, and tap Add. Start the game from the new icon, ideally in landscape orientation.
+5. Safari **Share → Add to Home Screen**, enable **Open as Web App** if asked, and tap Add. Start the game from the new icon, then rotate your phone to landscape orientation.
 6. Open the game once while connected to the internet so its service-worker cache is filled. Test airplane mode afterward.
 
 **Do not upload the creator testing file** to the public gift website; it has access to spoilers.
@@ -33,7 +33,7 @@ If any cached file changes, update `CACHE_NAME` in `sw.js` (for example, increme
 ## Deployment notes
 
 - Website must be served over HTTPS for service workers and reliable install behavior (localhost works during development).
-- Standalone app supports touch, portrait fallback, landscape recommendation, and safe-area insets. **iPhone rotation cannot always be locked by a PWA**, so users may need to rotate manually.
+- Standalone app supports touch, **landscape-only gameplay on phones**, and safe-area insets. In portrait, a full-screen rotate-your-phone prompt appears instead of the game. If rotated during play, the game pauses; tap Resume when landscape again. **iPhone PWAs cannot reliably force device orientation**, so users must turn the phone and disable Portrait Orientation Lock if needed.
 - Audio starts only after pressing Play, due to mobile browser restrictions; backgrounding the page pauses play.
 - The gift version hides later chapters and the ending viewer until the final ending is completed.
 - The spoiler-free icon is an original golden compass; the Brazil–USA emblem is kept exclusively for the final cinematic.
@@ -41,3 +41,11 @@ If any cached file changes, update `CACHE_NAME` in `sw.js` (for example, increme
 ## Local testing
 
 From this directory run `python3 -m http.server 8080`, then open `http://localhost:8080` on your computer. An iPhone on your network cannot use your computer's `localhost`; for iPhone use a deployed HTTPS URL.
+
+## Landscape-first update
+
+- Portrait phone screens show a non-spoiler “Turn your phone sideways” screen, including an iPhone orientation-lock tip.
+- The complete title menu, game, dialogue and cinematic are playable in landscape; on desktop the game behaves normally.
+- Turning the phone upright during gameplay pauses safely. After rotating back, select Resume Adventure.
+- Updated service-worker cache name to `v2-landscape`; uploading this build over the previous GitHub Pages files does not reset saves.
+- iPhone Safari cannot be compelled to change physical orientation. The manifest already requests `landscape` for supporting devices, but the CSS prompt is the dependable iOS behavior.
